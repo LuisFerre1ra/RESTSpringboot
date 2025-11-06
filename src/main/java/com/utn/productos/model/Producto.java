@@ -3,9 +3,11 @@ package com.utn.productos.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 @Entity
 public class Producto {
     @Id
