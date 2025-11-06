@@ -1,13 +1,13 @@
 package com.utn.productos.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Setter
+@Builder
 @Entity
 public class Producto {
     @Id

@@ -1,5 +1,7 @@
 package com.utn.productos.service;
 
+import com.utn.productos.dto.ProductoDTO;
+import com.utn.productos.dto.ProductoResponseDTO;
 import com.utn.productos.model.Categoria;
 import com.utn.productos.model.Producto;
 import com.utn.productos.repository.ProductoRepository;
@@ -19,8 +21,8 @@ public class ProductoService {
         productoRepository = repository;
     }
 
-    public void crearProducto(Producto producto) {
-        productoRepository.save(producto);
+    public Producto crearProducto(Producto producto) {
+        return productoRepository.save(producto);
     }
 
     public List<Producto> obtenerTodos() {
@@ -50,5 +52,26 @@ public class ProductoService {
 
     public void eliminarProducto(Long id) {
         productoRepository.deleteById(id);
+    }
+
+    public Producto mapToEntity(ProductoDTO dto) {
+        return Producto.builder()
+                .nombre(dto.nombre())
+                .descripcion(dto.descripcion())
+                .precio(dto.precio())
+                .stock(dto.stock())
+                .categoria(dto.categoria())
+                .build();
+    }
+
+    public ProductoResponseDTO mapToResponseDTO(Producto producto) {
+        return new ProductoResponseDTO(
+                producto.getId(),
+                producto.getNombre(),
+                producto.getDescripcion(),
+                producto.getPrecio(),
+                producto.getStock(),
+                producto.getCategoria()
+        );
     }
 }
