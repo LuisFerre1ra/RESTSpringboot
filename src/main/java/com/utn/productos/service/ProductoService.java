@@ -37,10 +37,11 @@ public class ProductoService {
         return productoRepository.findByCategoria(categoria);
     }
 
-    public void actualizarProducto(Long id, Producto productoActualizado) throws Exception {
+    public Producto actualizarProducto(Long id, Producto productoActualizado) throws Exception {
         Producto productoExistente = productoRepository.findById(id).orElseThrow(Exception::new);
         BeanUtils.copyProperties(productoActualizado, productoExistente, "id");
         productoRepository.save(productoExistente);
+        return productoExistente;
     }
 
     public Optional<Producto> actualizarStock(Long id, Integer nuevoStock) {

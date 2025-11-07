@@ -3,6 +3,7 @@ package com.utn.productos.controller;
 import com.utn.productos.dto.ActualizarStockDTO;
 import com.utn.productos.dto.ProductoDTO;
 import com.utn.productos.dto.ProductoResponseDTO;
+import com.utn.productos.exception.ProductoNotFoundException;
 import com.utn.productos.model.Categoria;
 import com.utn.productos.model.Producto;
 import com.utn.productos.service.ProductoService;
@@ -35,7 +36,7 @@ public class ProductoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductoResponseDTO> obtenerPorId(@PathVariable Long id) {
-        return productoService.obtenerPorId(id)
+        return productoService.obtenerById(id)
                 .map(producto -> ResponseEntity.ok(productoService.mapToResponseDTO(producto)))
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -70,7 +71,8 @@ public class ProductoController {
             @PathVariable Long id,
             @Valid @RequestBody ActualizarStockDTO dto) {
 
-        Producto actualizado = productoService.actualizarStock(id, dto.stock());
+        Producto actualizado = productoService.actualizarStock(id, dto.stock())
+                .orElseThrow(() -> new ProductoNotFoundException(id));
         return ResponseEntity.ok(productoService.mapToResponseDTO(actualizado));
     }
 
